@@ -1,45 +1,20 @@
 package main
 
-import (
-	"fmt"
-)
-
-// nはパッケージ変数、mainパッケージの中であればどこからでも参照できる
-var n = 100
 
 func main() {
-	// 変数
-	// 明示的な定義
-	var n int
-	var x, y, z int
-	var (
-		x, y int
-		name string
-	)
-	n = 5
-	x, y = 1, 2
+	// キャスト
+	n := 17 // int型の変数nを定義して17を代入
+	n := uint(17) // uint型の変数nを定義して17を代入
 
-	// 暗黙的な定義
-	i := 1 // 型推論
-	b := true
-	f := 3.14
-	s := "abc"
+	b := byte(n) // byte型へ変換
+	i64 := int64(n) // int64型へ変換
+	u32 := uint32(n) // uint32型へ変換
+
+	// 文字列型
+	s := `
+	Goの
+	RAW文字列リテラルによる
+	複数行にわたる
+	文字列
+	`
 }
-
-func one() int {
-	return 1
-}
-
-n := one
-
-
-// varと暗黙的な定義
-var (
-	n = 1
-	s = "string"
-	b = true
-)
-
-n := 1
-s := "string"
-b := true
