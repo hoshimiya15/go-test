@@ -4,20 +4,42 @@ import (
 	"fmt"
 )
 
+// nはパッケージ変数、mainパッケージの中であればどこからでも参照できる
+var n = 100
+
 func main() {
-	fmt.Println("My", "Name", "is", "Taro")
+	// 変数
+	// 明示的な定義
+	var n int
+	var x, y, z int
+	var (
+		x, y int
+		name string
+	)
+	n = 5
+	x, y = 1, 2
 
-	fmt.Printf("数値=%d\n", 5)
-
-	fmt.Printf("10進数=%d 2進数=%b 8進数=%o 16進数=%x\n", 17, 17, 17, 17)
-	
-	fmt.Printf("%d年%d月%d日\n", 2015, 12)
-
-	fmt.Printf("%d年%d月%d日\n", 2015, 12, 25, 17)
-	
-	fmt.Printf("数値=%v 文字列=%v 配列=%v\n", 5, "Golang", [...]int{1, 2, 3})
-
-	fmt.Printf("数値=%#v 文字列=%#v 配列=%#v\n", 5, "Golang", [...]int{1, 2, 3})
-	
-	fmt.Printf("数値=%T 文字列=%T 配列=%T\n", 5, "Golang", [...]int{1, 2, 3})
+	// 暗黙的な定義
+	i := 1 // 型推論
+	b := true
+	f := 3.14
+	s := "abc"
 }
+
+func one() int {
+	return 1
+}
+
+n := one
+
+
+// varと暗黙的な定義
+var (
+	n = 1
+	s = "string"
+	b = true
+)
+
+n := 1
+s := "string"
+b := true
