@@ -1,18 +1,60 @@
 package main
 
-func main() {
-	// interface{}とnil
-	// すべての型と互換
-	// var x interface{}
-	// x = 1
-	// x = 3.14
-	// x = '山'
-	// x = "文字列"
-	// x = [...]uint8{1, 2, 3, 4, 5}
-	// fmt.Printf("%v\n", x)
+import "fmt"
 
-	// 演算の対象としては利用できない
-	var x, y interface{}
-	x, y = 1, 2
-	z := x + y
+func div(a, b int) (int, int) {
+	q := a / b
+	r := a % b
+	return q, r
 }
+
+func later() func(string) string {
+	var store string
+	return func(next string) string {
+		s := store
+		store = next
+		return s
+	}
+}
+
+func intergers() func() int {
+	i := 0
+	return func() int {
+		i += 1
+		return i
+	}
+}
+
+func main() {
+	// // 戻り値の破棄
+	// q, _ := div(19, 7)
+
+	// // 関数とエラー処理
+	// result, err := doSomething()
+	// if (err != nil) {
+	// 	// エラー処理
+	// }
+
+	// // クロージャとしての無名関数
+	// f := later()
+
+	// fmt.Println(f("Golang"))
+	// fmt.Println(f("is"))
+	// fmt.Println(f("awesome!"))
+
+	// クロージャによるジェネレータの実装
+	ints := intergers()
+
+	fmt.Println(ints())
+	fmt.Println(ints())
+	fmt.Println(ints())
+
+	otherInts := intergers()
+	fmt.Println(otherInts())
+}
+
+// // 戻り値を表す変数
+// func doSomething() (x, y int) {
+// 	y = 5
+// 	return // x == 0, y == 5
+// }
