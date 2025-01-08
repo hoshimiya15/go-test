@@ -2,59 +2,38 @@ package main
 
 import "fmt"
 
-func div(a, b int) (int, int) {
-	q := a / b
-	r := a % b
-	return q, r
-}
-
-func later() func(string) string {
-	var store string
-	return func(next string) string {
-		s := store
-		store = next
-		return s
-	}
-}
-
-func intergers() func() int {
-	i := 0
-	return func() int {
-		i += 1
-		return i
+func receiver(ch <-chan int) {
+	for {
+		i := <-ch
+		fmt.Println(i)
 	}
 }
 
 func main() {
-	// // 戻り値の破棄
-	// q, _ := div(19, 7)
+	// // # チャネルの型
+	// // 変数chはint型のチャネル
+	// var ch chan int
+	// // 変数ch1はint型の受信専用チャネル
+	// var ch1 <-chan int
+	// // 変数chはint型の送信専用チャネル
+	// var ch2 chan<- int
 
-	// // 関数とエラー処理
-	// result, err := doSomething()
-	// if (err != nil) {
-	// 	// エラー処理
-	// }
-
-	// // クロージャとしての無名関数
-	// f := later()
-
-	// fmt.Println(f("Golang"))
-	// fmt.Println(f("is"))
-	// fmt.Println(f("awesome!"))
-
-	// クロージャによるジェネレータの実装
-	ints := intergers()
-
-	fmt.Println(ints())
-	fmt.Println(ints())
-	fmt.Println(ints())
-
-	otherInts := intergers()
-	fmt.Println(otherInts())
+	// // # チャネルの生成
+	// // 変数chはバッファサイズ0のチャネル
+	// ch := make(chan int)
+	// // 変数chはバッファサイズ8のチャネル
+	// ch := make(chan int, 8)
+	// // チャネルに整数5を送信
+	// ch <- 5
+	// // チャネルから整数値を受信
+	// i := <-ch
+	
+	// # チャネルとゴルーチン
+	ch := make(chan int)
+	go receiver(ch)
+	i := 0
+	for i < 1000 {
+		ch <- i
+		i++
+	}
 }
-
-// // 戻り値を表す変数
-// func doSomething() (x, y int) {
-// 	y = 5
-// 	return // x == 0, y == 5
-// }
