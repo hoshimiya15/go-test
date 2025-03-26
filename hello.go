@@ -27,7 +27,6 @@ func (c Cat) GetName() string {
 func main() {
 	var animals []IAnimal = []IAnimal{
 		Dog{"ポチ"},
-		Dog{"ジョン"},
 		Cat{"ミケ"},
 		Cat{"タマ"},
 	}
