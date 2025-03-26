@@ -2,11 +2,36 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/tenntenn/greeting"
 )
 
-func main() {
-	greet := greeting.Do()
-	fmt.Println(greet)
+type IAnimal interface {
+	GetName() string
 }
+
+type Dog struct {
+	name string
+}
+
+func (d Dog) GetName() string {
+	return d.name
+}
+
+type Cat struct {
+	name string
+}
+
+func (c Cat) GetName() string {
+	return c.name
+}
+
+func main() {
+	var animals []IAnimal = []IAnimal{
+		Dog{"ポチ"},
+		Cat{"ミケ"},
+		Cat{"タマ"},
+	}
+
+	for _, animal := range animals {
+		fmt.Println(animal.GetName())
+	}
+}	
