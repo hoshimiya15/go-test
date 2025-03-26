@@ -2,36 +2,44 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
-type IAnimal interface {
-	GetName() string
+// インターフェース
+type Stringer interface {
+	String() string
 }
 
-type Dog struct {
-	name string
+// 任意の値を受け取ってString型にして返す、エラーであればMyError型のエラーメッセージ
+func ToStringer(v interface{}) (Stringer, error) {
+	if s, ok := v.(Stringer); ok {
+		return s,nil
+	}
+	return nil, MyError("CastError")
 }
 
-func (d Dog) GetName() string {
-	return d.name
+type MyError string
+
+// MyError型にErrorメソッドの実装
+func (e MyError) Error() string {
+	return string(e)
 }
 
-type Cat struct {
-	name string
-}
+type S string
 
-func (c Cat) GetName() string {
-	return c.name
+// S型にStringメソッドの実装
+func (s S) String() string {
+	return string(s)
 }
 
 func main() {
-	var animals []IAnimal = []IAnimal{
-		Dog{"ポチ"},
-		Cat{"ミケ"},
-		Cat{"タマ"},
-	}
+	v := S("hoge")
 
-	for _, animal := range animals {
-		fmt.Println(animal.GetName())
+	// sとerrにToStringer()の返り値が入る
+	if s, err := ToStringer(v); err != nil {
+		// エラーあり
+		fmt.Fprintln(os.Stderr, "ERROR:", err)
+	} else {
+		fmt.Println(s.String())
 	}
 }	
